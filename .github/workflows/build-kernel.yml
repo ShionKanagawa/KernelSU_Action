@@ -116,10 +116,7 @@ jobs:
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         rm -rf KernelSU drivers/kernelsu
         curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -s ${{ env.KERNELSU_TAG }}
-        mv patch/0001-DNM-HACK-KernelSU-make-save_allow_list-works-on-old-.patch KernelSU
-        cd KernelSU
-        git apply 0001-DNM-HACK-KernelSU-make-save_allow_list-works-on-old-.patch
-        cd ..
+        sh patch/ksu_patch_samsung.sh 
         KSU_VERSION=$(cd KernelSU && expr $(/usr/bin/git rev-list --count HEAD) + 10200)
         echo "UPLOADNAME=-KernelSU_$KSU_VERSION" >> $GITHUB_ENV
 
